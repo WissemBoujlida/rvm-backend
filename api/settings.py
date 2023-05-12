@@ -93,11 +93,11 @@ WSGI_APPLICATION = 'api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'rvm',
+        'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'PASSWORD': 'e8omWdbjYskXWtt8b4WA',
+        'HOST': 'containers-us-west-16.railway.app',
+        'PORT': '8061'
 
     }
 }
