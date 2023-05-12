@@ -60,12 +60,8 @@ def generate_qrcode_view(request):
     token =  Token.objects.get(user=user)
     data = f"{id}:{token}"
     qrCode = qrcode.make(data)
-    buffer = io.BytesIO()
-    qrCode.save(buffer, format='PNG')
-    qr_png = buffer.getvalue()
-    response = HttpResponse(qr_png, content_type='image/png')
-    response['Content-Disposition'] = 'attachment; filename="qr_code.png"'
-    return response
+    qrCode.save(f"staticfiles/qrcodes/{username}_qrcode.png")
+    return Response({'qrcode_url': f"https://rvm-production.up.railway.app/staticfiles/qrcodes/{username}_qrcode.png"}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET', ])
