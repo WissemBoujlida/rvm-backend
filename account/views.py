@@ -85,7 +85,7 @@ def generate_qrcode_view(request):
     file_path = os.path.join('qr_codes', file_path)
 
     # Save QR code image to file
-    img = qrCode.make_image(fill_color="black", back_color="white")
+    img = qrCode.make(fill_color="black", back_color="white")
     img.save(file_path)
 
     # Return URL for the saved QR code image
