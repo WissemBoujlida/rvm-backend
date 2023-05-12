@@ -10,7 +10,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 import qrcode
 import io
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from account.models import Account
 
 @api_view(['POST', ])
 def registration_view(request):
@@ -55,7 +55,7 @@ def qrcode_authentication_view(request):
 @api_view(['POST', ])
 def generate_qrcode_view(request):
     username = request.data.get("username")
-    user = User.objects.get(username=username)
+    user = Account.objects.get(username=username)
     id = user.id
     token =  Token.objects.get(user=user)
     data = f"{id}:{token}"
