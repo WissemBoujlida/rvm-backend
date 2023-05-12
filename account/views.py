@@ -7,6 +7,9 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import login
 from account.backends import TokenAuthenticationBackend
 from rest_framework.authtoken.views import ObtainAuthToken
+import qrcode
+import io
+from django.http import HttpResponse
 
 @api_view(['POST', ])
 def registration_view(request):
@@ -47,6 +50,19 @@ def qrcode_authentication_view(request):
     else:
         return Response({'response': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
+
+@api_view(['POST', ])
+def generate_qrcode_view(request):
+    id = request.data.get("id")
+    token = request.data.get("token")
+    data = f"{id}:{token}"
+    qrCode = qrcode.make(data)
+    buffer = io.BytesIO()
+    qrCode.save(buffer, format='PNG')
+    qr_png = buffer.getvalue()
+    response = HttpResponse(qr_png, content_type='image/png')
+    response['Content-Disposition'] = 'attachment; filename="qr_code.png"'
+    return response
 
 
 @api_view(['GET', ])
