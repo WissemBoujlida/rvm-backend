@@ -11,6 +11,7 @@ import qrcode
 import io
 from django.http import HttpResponse
 from account.models import Account
+import os
 
 @api_view(['POST', ])
 def registration_view(request):
@@ -51,7 +52,7 @@ def qrcode_authentication_view(request):
     else:
         return Response({'response': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-
+"""
 @api_view(['POST', ])
 def generate_qrcode_view(request):
     username = request.data.get("username")
@@ -66,7 +67,29 @@ def generate_qrcode_view(request):
     response = HttpResponse(qr_png, content_type='image/png')
     response['Content-Disposition'] = 'attachment; filename="qr_code.png"'
     return response
+"""
 
+@api_view(['POST', ])
+def generate_qrcode_view(request):
+    username = request.data.get("username")
+    user = Account.objects.get(username=username)
+    id = user.id
+    token =  Token.objects.get(user=user)
+    data = f"{id}:{token}"
+    qrCode = qrcode.make(data)
+    if not os.path.exists('qr_codes'):
+        os.mkdir('qr_codes')
+
+    # Generate file name for QR code image
+    file_path = f"{username}_qrcode.png"
+    file_path = os.path.join('qr_codes', file_path)
+
+    # Save QR code image to file
+    img = qrCode.make_image(fill_color="black", back_color="white")
+    img.save(file_path)
+
+    # Return URL for the saved QR code image
+    return Response({'response': f"https://rvm-production.up.railway.app/{file_path}"}, status=status.HTTP_200_OK)
 
 @api_view(['GET', ])
 @permission_classes([IsAuthenticated])
