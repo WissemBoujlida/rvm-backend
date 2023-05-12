@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import RecyclableItemView, RecyclingHistoryView, RecyclingTransactionView, RVMView
-from account.views import registration_view, qrcode_authentication_view, test_permission_view
+from account.views import registration_view, qrcode_authentication_view, test_permission_view, generate_qrcode_view
 from rest_framework.authtoken.views import obtain_auth_token
 from account.views import CustomObtainAuthToken
 
@@ -25,6 +25,7 @@ urlpatterns = [
     path('rvm/api/register', registration_view),
     path('rvm/api/login', CustomObtainAuthToken.as_view()),
     path('rvm/api/qrcode-auth', qrcode_authentication_view),
+    path('rvm/api/qrcode-generate', generate_qrcode_view),
     path('rvm/api/test-permission', test_permission_view),
 
     path('admin', admin.site.urls),
