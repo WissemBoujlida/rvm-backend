@@ -19,7 +19,7 @@ from django.urls import path
 from .views import RecyclableItemView, RecyclingHistoryView, RecyclingTransactionView, RVMView
 from account.views import registration_view, qrcode_authentication_view, test_permission_view, generate_qrcode_view
 from rest_framework.authtoken.views import obtain_auth_token
-from account.views import CustomObtainAuthToken, getRecyclingTransactions
+from account.views import CustomObtainAuthToken, getRecyclingTransactions, getTotalRecompense
 
 urlpatterns = [
     path('rvm/api/register', registration_view),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('rvm/api/qrcode-generate', generate_qrcode_view),
     path('rvm/api/get-recycling-transactions', getRecyclingTransactions),
     path('rvm/api/get-recycling-history', RecyclingTransactionView.getRecyclingHistory),
+    path('rvm/api/get-total-recompense', getTotalRecompense),
 
     path('admin', admin.site.urls),
     path('rvm/api/recyclableItem', RecyclableItemView.getAll),

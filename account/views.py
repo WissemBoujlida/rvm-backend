@@ -14,6 +14,7 @@ from account.models import Account
 import os
 from api.models import RecyclingTransaction
 from api.serializers import RecyclingTransactionSerializer
+from django.db.models import Sum
 
 @api_view(['POST', ])
 def registration_view(request):
@@ -82,6 +83,21 @@ def getRecyclingTransactions(request):
     
     # Or return transactions directly
     #return Response(transactions.values())
+
+@api_view(['POST'])
+def getTotalRecompense(request):
+    username = request.data.get("username")
+    user = Account.objects.get(username=username)
+    transactions = RecyclingTransaction.objects.filter(client=user)
+    total_recompense = transactions.aggregate(total_recompense_sum=Sum('totalRecompense'))['total_recompense_sum']
+    # You can serialize the transactions or return them as-is, based on your needs
+    #serialize transactions if you have a serializer defined
+    response_data = {
+        'total_recompense': total_recompense
+    }
+    
+    return Response(response_data)
+
 
 @api_view(['GET', ])
 @permission_classes([IsAuthenticated])
