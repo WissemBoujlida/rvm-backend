@@ -76,11 +76,11 @@ def deleteRecyclingTransaction(request, id):
 def getRecyclingHistory(request):
     recyclingTransactionId = request.data.get("id")
     recyclingTransaction = get_object_or_404(RecyclingTransaction, id=recyclingTransactionId)
-    RecyclingHistory = RecyclingHistory.objects.filter(recyclingTransaction=recyclingTransaction)
+    recyclingHistory = RecyclingHistory.objects.filter(recyclingTransaction=recyclingTransaction)
     
     # You can serialize the transactions or return them as-is, based on your needs
     #serialize transactions if you have a serializer defined
-    serializedHistory = RecyclingHistorySerializer(RecyclingHistory, many=True)
+    serializedHistory = RecyclingHistorySerializer(recyclingHistory, many=True)
     return Response(serializedHistory.data)
     
     # Or return transactions directly
