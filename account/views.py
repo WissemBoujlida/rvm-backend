@@ -12,6 +12,8 @@ import io
 from django.http import HttpResponse
 from account.models import Account
 import os
+from api.models import RecyclingTransaction
+from api.serializers import RecyclingTransactionSerializer
 
 @api_view(['POST', ])
 def registration_view(request):
@@ -66,6 +68,20 @@ def generate_qrcode_view(request):
     response = HttpResponse(qr_png, content_type='image/png')
     response['Content-Disposition'] = 'attachment; filename="qr_code.png"'
     return response
+
+@api_view(['GET'])
+def getRecyclingTransactions(request):
+    username = request.data.get("username")
+    user = Account.objects.get(username=username)
+    transactions = RecyclingTransaction.objects.filter(client=user)
+    
+    # You can serialize the transactions or return them as-is, based on your needs
+    #serialize transactions if you have a serializer defined
+    serializedTransactions = RecyclingTransactionSerializer(transactions, many=True)
+    return Response(serializedTransactions.data)
+    
+    # Or return transactions directly
+    #return Response(transactions.values())
 
 @api_view(['GET', ])
 @permission_classes([IsAuthenticated])
