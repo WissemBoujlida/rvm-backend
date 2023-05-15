@@ -23,7 +23,7 @@ from account.views import CustomObtainAuthToken
 
 urlpatterns = [
     path('https://rvm-production.up.railway.app/rvm/api/register', registration_view),
-    path('https://rvm-production.up.railway.app/rvm/api/login', CustomObtainAuthToken.as_view()),
+    path('rvm/api/login', CustomObtainAuthToken.as_view()),
     path('https://rvm-production.up.railway.app/rvm/api/qrcode-auth', qrcode_authentication_view),
     path('https://rvm-production.up.railway.app/rvm/api/qrcode-generate', generate_qrcode_view),
     path('https://rvm-production.up.railway.app/rvm/api/test-permission', test_permission_view),
