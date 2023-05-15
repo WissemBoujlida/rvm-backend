@@ -1,10 +1,12 @@
 from api.models import RecyclingTransaction
-from api.serializers import RecyclingTransactionSerializer
+from api.serializers import RecyclingTransactionSerializer, RecyclingHistorySerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from api.models import Account, RVM
+from api.models import RecyclingHistory
+
 
 @api_view(['GET'])
 def getAll(request):
@@ -68,3 +70,18 @@ def deleteRecyclingTransaction(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
     recyclingTransaction.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def getRecyclingTransactions(request):
+    recyclingTransactionId = request.data.get("id")
+    recyclingTransaction = get_object_or_404(RecyclingTransaction, id=recyclingTransactionId)
+    RecyclingHistory = RecyclingHistory.objects.filter(recyclingTransaction=recyclingTransaction)
+    
+    # You can serialize the transactions or return them as-is, based on your needs
+    #serialize transactions if you have a serializer defined
+    serializedHistory = RecyclingHistorySerializer(RecyclingHistory, many=True)
+    return Response(serializedHistory.data)
+    
+    # Or return transactions directly
+    #return Response(transactions.values())
