@@ -69,7 +69,7 @@ def generate_qrcode_view(request):
     response['Content-Disposition'] = 'attachment; filename="qr_code.png"'
     return response
 
-@api_view(['GET'])
+@api_view(['POST'])
 def getRecyclingTransactions(request):
     username = request.data.get("username")
     user = Account.objects.get(username=username)

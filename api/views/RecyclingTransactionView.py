@@ -72,8 +72,8 @@ def deleteRecyclingTransaction(request, id):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['GET'])
-def getRecyclingTransactions(request):
+@api_view(['POST'])
+def getRecyclingHistory(request):
     recyclingTransactionId = request.data.get("id")
     recyclingTransaction = get_object_or_404(RecyclingTransaction, id=recyclingTransactionId)
     RecyclingHistory = RecyclingHistory.objects.filter(recyclingTransaction=recyclingTransaction)

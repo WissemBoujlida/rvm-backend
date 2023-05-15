@@ -27,6 +27,7 @@ urlpatterns = [
     path('rvm/api/qrcode-auth', qrcode_authentication_view),
     path('rvm/api/qrcode-generate', generate_qrcode_view),
     path('rvm/api/get-recycling-transactions', getRecyclingTransactions),
+    path('rvm/api/get-recycling-history', RecyclingTransactionView.getRecyclingHistory),
 
     path('admin', admin.site.urls),
     path('rvm/api/recyclableItem', RecyclableItemView.getAll),
