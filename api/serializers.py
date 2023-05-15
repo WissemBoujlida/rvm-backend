@@ -17,9 +17,10 @@ class RVMSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class RecyclingTransactionSerializer(serializers.ModelSerializer):
+    rvm_address = serializers.CharField(source='rvm.address', read_only=True)
     class Meta:
         model = RecyclingTransaction
-        fields = fields = ['id', 'client', 'rvm', 'transactionDate', 'totalRecompense']
+        fields = fields = ['id', 'transactionDate', 'rvm_address', 'totalRecompense']
 
 class RecyclingHistorySerializer(serializers.ModelSerializer):
     class Meta:
