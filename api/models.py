@@ -14,13 +14,12 @@ class RecyclableItem(models.Model):
         ('WATER', 'Water'),
         ('SODA', 'Soda')
     )
-
+    
     container = models.CharField(max_length=30, choices=CONTAINER_CHOICES)
     material = models.CharField(max_length=30, choices=MATERIAL_CHOICES)
     brand = models.CharField(max_length=30)
     volume = models.FloatField()
     beverageType = models.CharField(max_length=30, choices=BEVERAGE_TYPE_CHOICES)    
-
 
 class RVM(models.Model):
     class Status(models.IntegerChoices):

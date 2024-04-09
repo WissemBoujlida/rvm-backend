@@ -20,8 +20,6 @@ class CaseInsensitiveModelBackend(ModelBackend):
             if user.check_password(password) and self.user_can_authenticate(user):
                 return user
 
-
-
 class TokenAuthenticationBackend(BaseBackend):
     def authenticate(self, request, id=None, auth_token=None):
         UserModel = get_user_model()

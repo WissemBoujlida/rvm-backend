@@ -64,7 +64,6 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-
 # Now every single time a new user is registred a token will be generated
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def generate_auth_token(sender, instance=None, created=False, **kwargs):

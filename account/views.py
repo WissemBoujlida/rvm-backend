@@ -39,7 +39,6 @@ class CustomObtainAuthToken(ObtainAuthToken):
         token = Token.objects.get(key=response.data['token'])
         return Response({'token': token.key, 'id': token.user_id})
 
-
 @api_view(['POST', ])
 def qrcode_authentication_view(request):
     id = request.data.get("id")
@@ -97,7 +96,6 @@ def getTotalRecompense(request):
     }
     
     return Response(response_data)
-
 
 @api_view(['GET', ])
 @permission_classes([IsAuthenticated])
